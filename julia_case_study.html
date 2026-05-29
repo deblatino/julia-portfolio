@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Julia — Boutique Hospitality Template</title>
+    <style>
+        :root {
+            --cream: #FAF8F3;
+            --sand: #E8E0D4;
+            --light-sand: #F5F0E8;
+            --wood: #8B7D6B;
+            --forest: #4A5238;
+            --dark: #2B2926;
+            --accent: #A8876F;
+            --border: #E1D9CC;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Georgia', 'Garamond', serif;
+            background: var(--cream);
+            color: var(--dark);
+            line-height: 1.8;
+            letter-spacing: 0.3px;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 400;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            color: var(--dark);
+        }
+
+        p {
+            font-size: clamp(1rem, 1.1vw, 1.1rem);
+            margin-bottom: 1rem;
+            max-width: 600px;
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        .subtitle {
+            font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+            font-style: italic;
+            color: var(--wood);
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .meta {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--wood);
+            margin-bottom: 1rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5vw;
+        }
+
+        section {
+            padding: clamp(4rem, 12vh, 8rem) 0;
+            position: relative;
+        }
+
+        section.hero {
+            padding: clamp(5rem, 15vh, 10rem) 0;
+            background: linear-gradient(135deg, rgba(74, 82, 56, 0.03) 0%, rgba(139, 125, 107, 0.03) 100%);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        section.light-bg {
+            background: var(--light-sand);
+        }
+
+        section.dark-bg {
+            background: var(--dark);
+            color: white;
+        }
+
+        section.dark-bg p,
+        section.dark-bg h2 {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            margin: 2rem 0 0 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .full-width-image {
+            width: calc(100% + 10vw);
+            margin-left: -5vw;
+            height: 480px;
+            object-fit: cover;
+            margin: 2rem -5vw;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .full-width-image:hover {
+            transform: scale(1.01);
+        }
+
+        @media (max-width: 768px) {
+            .full-width-image {
+                width: 100%;
+                height: 300px;
+                margin: 2rem 0;
+            }
+
+            .full-width-image:hover {
+                transform: scale(1);
+            }
+
+            .hero-image {
+                height: 300px;
+            }
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(2rem, 5vw, 3rem);
+            align-items: center;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(1.5rem, 3vw, 2rem);
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-item {
+            text-align: center;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .comparison-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .comparison-image {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1;
+            object-fit: cover;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.4s ease;
+        }
+
+        .comparison-item:hover .comparison-image {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .insight-box {
+            background: var(--sand);
+            padding: clamp(1.5rem, 3vw, 2rem);
+            margin: 2rem 0;
+            border-left: 5px solid var(--forest);
+            font-style: italic;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--dark);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+
+        .insight-box:hover {
+            background: var(--border);
+            transform: translateX(8px);
+        }
+
+        section.dark-bg .insight-box {
+            background: rgba(139, 125, 107, 0.2);
+            border-left-color: var(--accent);
+            color: white;
+        }
+
+        section.dark-bg .insight-box:hover {
+            background: rgba(139, 125, 107, 0.3);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat {
+            padding: 1.5rem;
+            background: white;
+            border-top: 3px solid var(--forest);
+            text-align: left;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+
+        .stat:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 400;
+            color: var(--forest);
+            line-height: 1;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--wood);
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: clamp(3rem, 8vh, 5rem) 0;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--forest), var(--accent));
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.2s ease;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: clamp(3rem, 6vh, 4rem) 5vw;
+            text-align: center;
+            margin-top: clamp(4rem, 8vh, 6rem);
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 0.5rem;
+            max-width: 100%;
+        }
+
+        .footer-meta {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 1rem;
+        }
+
+        .image-placeholder {
+            background: linear-gradient(135deg, var(--sand) 0%, var(--light-sand) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--wood);
+            font-style: italic;
+            border: 1px dashed var(--border);
+            font-size: 0.9rem;
+        }
+
+        /* ===== PROPERTY LIST ===== */
+        .property-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .property-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-left: 0;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .property-item:before {
+            content: none;
+        }
+
+        .property-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--forest);
+            border-radius: 50%;
+            flex-shrink: 0;
+            opacity: 0.7;
+        }
+
+        .reveal-item {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) var(--item-delay, 0s),
+                        transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) var(--item-delay, 0s);
+        }
+
+        .reveal-item.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-item:nth-child(1) { --item-delay: 0s; }
+        .reveal-item:nth-child(2) { --item-delay: 0.1s; }
+        .reveal-item:nth-child(3) { --item-delay: 0.2s; }
+        .reveal-item:nth-child(4) { --item-delay: 0.3s; }
+        .reveal-item:nth-child(5) { --item-delay: 0.4s; }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(1.5rem, 2vw, 2rem);
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        .card {
+            background: white;
+            padding: clamp(1.5rem, 3vw, 2rem);
+            border-left: 5px solid var(--forest);
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+
+        .card:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .card-number {
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--forest);
+            opacity: 0.2;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .card p {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .card strong {
+            color: var(--forest);
+        }
+
+        .reveal-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) var(--delay, 0s), 
+                        transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) var(--delay, 0s);
+        }
+
+        .reveal-card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-card:nth-child(1) { --delay: 0s; }
+        .reveal-card:nth-child(2) { --delay: 0.1s; }
+        .reveal-card:nth-child(3) { --delay: 0.2s; }
+        .reveal-card:nth-child(4) { --delay: 0.3s; }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 2.5rem 0;
+            }
+
+            .divider {
+                margin: 2rem 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar"></div>
+
+    <!-- ===== SECTION 1: HERO ===== -->
+    <section class="hero">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 2rem;">
+                <h1 style="margin-bottom: 0; flex-shrink: 0;">Julia</h1>
+                <span style="font-size: 0.9rem; color: var(--wood); opacity: 0.5; letter-spacing: 0.5px; white-space: nowrap;">Phased Design • April 2026</span>
+            </div>
+            <p class="subtitle">A Boutique Hospitality Template for Squarespace</p>
+            <p style="margin-bottom: 0; color: var(--wood); font-size: 0.95rem;">Sample: California Cabin Retreat</p>
+            <div class="image-placeholder hero-image">
+                [Hero Image: Julia__HOME_Final.png]
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== SECTION 2: THE SYSTEM ===== -->
+    <section class="reveal">
+        <div class="container">
+            <h2>One Template. Infinite Luxury Properties.</h2>
+            
+            <p style="margin-top: 1.5rem; max-width: 700px;">Julia is a system for independent hosts with boutique properties. Any intimate, curated stay that deserves a premium digital presence. The template works because it focuses on what guests actually want: the story, the atmosphere, the experience. Not a generic property listing.</p>
+            
+            <div style="margin-top: 2.5rem;">
+                <p style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--wood); margin-bottom: 1.5rem;">Works for:</p>
+                <ul class="property-list">
+                    <li class="property-item reveal-item">
+                        <span class="property-dot"></span>
+                        <span>Mountain cabins</span>
+                    </li>
+                    <li class="property-item reveal-item">
+                        <span class="property-dot"></span>
+                        <span>Beach bungalows</span>
+                    </li>
+                    <li class="property-item reveal-item">
+                        <span class="property-dot"></span>
+                        <span>Glamping sites</span>
+                    </li>
+                    <li class="property-item reveal-item">
+                        <span class="property-dot"></span>
+                        <span>Winter retreats</span>
+                    </li>
+                    <li class="property-item reveal-item">
+                        <span class="property-dot"></span>
+                        <span>Any boutique property</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== SECTION 3: THE PROBLEM ===== -->
+    <section class="light-bg reveal">
+        <div class="container">
+            <h2>Luxury Without a Designer Budget</h2>
+            <p style="margin-top: 1.5rem;">Independent hosts want their properties to feel as premium as Airbnb Luxe. But they cannot hire a designer. They need a template that feels custom, works beautifully, and requires zero code to maintain.</p>
+            
+            <div class="comparison-grid" style="margin-top: 2rem;">
+                <div class="comparison-item">
+                    <div class="image-placeholder comparison-image">
+                        [Moodboard 1: JuliaMood_Board.png]
+                    </div>
+                </div>
+                <div class="comparison-item">
+                    <div class="image-placeholder comparison-image">
+                        [Moodboard 2: Reference/Inspiration]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== SECTION 4: THE INSIGHT ===== -->
+    <section class="reveal">
+        <div class="container">
+            <h2>Guests Book Experiences. Hosts Tell Stories.</h2>
+            <p style="margin-top: 1.5rem;">Before designing, I researched both users. Guests do not want lists of amenities—they want to imagine themselves there. Hosts need help making their property feel like a curated experience, not a transaction.</p>
+            <div class="insight-box" style="margin-top: 1.5rem;">
+                Every design decision that followed was about bridging that gap.
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== SECTION 5: STRATEGY & EXPLORATION ===== -->
+    <section class="light-bg reveal">
+        <div class="container">
+            <h2>Two Directions. One Hybrid Vision.</h2>
+            <p style="margin-top: 1.5rem;">I researched what "editorial luxury" actually looks like, then created two directional prototypes. The client chose the minimalist aesthetic of Prototype 1, but the clear navigation and booking path of Prototype 2. Best of both.</p>
+            
+            <div class="comparison-grid" style="margin-top: 2rem;">
+                <div class="comparison-item">
+                    <h3 style="font-size: 1rem; font-weight: 500; margin-bottom: 0.8rem; color: var(--forest);">Prototype 1</h3>
+                    <div class="image-placeholder comparison-image">
+                        [Prototype 1: Prototype_1__HOME.png]
+                    </div>
+                </div>
+                <div class="comparison-item">
+                    <h3 style="font-size: 1rem; font-weight: 500; margin-bottom: 0.8rem; color: var(--forest);">Prototype 2</h3>
+                    <div class="image-placeholder comparison-image">
+                        [Prototype 2: Prototype_2__HOME.png]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== SECTION 6: THE CONSTRAINTS ===== -->
+    <section class="dark-bg reveal">
+        <div class="container">
+            <h2>Three Constraints. Three Better Solutions.</h2>
+            <p style="margin-top: 1.5rem;">Squarespace has limits. No custom code. No gallery filtering. Limited typography control. But constraints force creative thinking. Every limitation became a design opportunity.</p>
+            
+            <div class="insight-box" style="margin-top: 1.5rem;">
+                Instead of asking "how do I work around this?" I asked "what elegant solution does this constraint force us to discover?"
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== SECTION 7: THE SOLUTIONS ===== -->
+    <section class="reveal">
+        <div class="container">
+            <h2>From Gallery Filtering to Guided Journeys</h2>
+            <p style="margin-top: 1.5rem;">When galleries could not be filtered, I created curated slideshows organized by space: Main Cabin, Living Areas, Outdoor Spaces. Guests browse at their own pace. It feels like a guided tour, not an image dump.</p>
+            
+            <div class="full-width-image" style="height: 400px;">
+                [Gallery Solution: Julia__ROOMS_Final.png]
+            </div>
+
+            <h2 style="margin-top: 3rem;">From Icons to Premium Photography</h2>
+            <p style="margin-top: 1.5rem;">Custom icon libraries cost money and add complexity for hosts. Instead, I created photo tiles where hosts upload photos of their actual amenities. More luxurious. More personal. More authentic.</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <h3 style="font-size: 0.95rem; font-weight: 500; margin-bottom: 0.8rem; color: var(--forest);">Desktop</h3>
+                    <div class="image-placeholder comparison-image">
+                        [Desktop: Julia__AMENITIES_Final.png]
+                    </div>
+                </div>
+                <div class="comparison-item">
+                    <h3 style="font-size: 0.95rem; font-weight: 500; margin-bottom: 0.8rem; color: var(--forest);">Mobile</h3>
+                    <div class="image-placeholder comparison-image">
+                        [Mobile: Julia_Mobile__AMENITIES_Final.PNG]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== SECTION 8: EXECUTION & IMPACT ===== -->
+    <section class="light-bg reveal">
+        <div class="container">
+            <h2>Built in 19 Hours. Ready to Launch.</h2>
+            <p style="margin-top: 1.5rem;">No custom code. No perfectionism. Just disciplined execution. The timeline forced clarity about what actually mattered.</p>
+            
+            <div class="stats-grid" style="margin-top: 2rem;">
+                <div class="stat">
+                    <div class="stat-number">19</div>
+                    <div class="stat-label">Hours</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Custom Code</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Major Problems Solved</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Applications</div>
+                </div>
+            </div>
+
+            <div class="insight-box" style="margin-top: 2rem;">
+                <strong>Why this matters:</strong> This is a system, not a one-off design. It works for cabins, beaches, glamping, winter retreats—any boutique property where the story matters more than the transaction.
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="reveal">
+        <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">🌲 Julia</p>
+        <p>Boutique Hospitality Template for Squarespace</p>
+        <p class="footer-meta">Designed for the Shopify Design Apprentice Program | May 2026</p>
+        <p class="footer-meta" style="margin-top: 1rem;">Ready for hosts who want luxury without compromise.</p>
+    </footer>
+
+    <script>
+        const reveals = document.querySelectorAll('.reveal');
+        const revealCards = document.querySelectorAll('.reveal-card');
+        const revealItems = document.querySelectorAll('.reveal-item');
+
+        function reveal() {
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+
+            revealCards.forEach(card => {
+                const windowHeight = window.innerHeight;
+                const cardTop = card.getBoundingClientRect().top;
+                const cardVisible = 150;
+
+                if (cardTop < windowHeight - cardVisible) {
+                    card.classList.add('active');
+                }
+            });
+
+            revealItems.forEach(item => {
+                const windowHeight = window.innerHeight;
+                const itemTop = item.getBoundingClientRect().top;
+                const itemVisible = 150;
+
+                if (itemTop < windowHeight - itemVisible) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', reveal);
+        reveal();
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.querySelector('.progress-bar').style.width = scrollPercent + '%';
+        });
+    </script>
+
+</body>
+</html>
