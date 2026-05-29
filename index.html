@@ -254,33 +254,50 @@
             background: rgba(139, 125, 107, 0.3);
         }
 
-        .property-list {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .property-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            padding-left: 0;
-            font-size: 1.05rem;
-            line-height: 1.6;
-        }
-
-        .property-item:before {
-            content: none;
-        }
-
-        .property-dot {
-            width: 8px;
-            height: 8px;
+        .property-box {
             background: var(--forest);
-            border-radius: 50%;
-            flex-shrink: 0;
-            opacity: 0.7;
+            color: white;
+            padding: clamp(2rem, 4vw, 2.5rem);
+            border-radius: 4px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .property-box .property-list {
+            margin: 0;
+        }
+
+        .property-box .property-item {
+            color: white;
+            margin-bottom: 1.2rem;
+        }
+
+        .property-box .property-dot {
+            background: var(--accent);
+            opacity: 1;
+        }
+
+        .property-box .property-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(2rem, 5vw, 3rem);
+            align-items: flex-start;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .section-two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .property-box {
+                position: static;
+            }
         }
 
         .reveal-item {
@@ -413,32 +430,36 @@
         <div class="container">
             <h2>One Template. Infinite Luxury Properties.</h2>
             
-            <p style="margin-top: 1.5rem; max-width: 700px;">Julia is a system for independent hosts with boutique properties. Any intimate, curated stay that deserves a premium digital presence. The template works because it focuses on what guests actually want: the story, the atmosphere, the experience. Not a generic property listing.</p>
-            
-            <div style="margin-top: 2.5rem;">
-                <p style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--wood); margin-bottom: 1.5rem;">Works for:</p>
-                <ul class="property-list">
-                    <li class="property-item reveal-item">
-                        <span class="property-dot"></span>
-                        <span>Mountain cabins</span>
-                    </li>
-                    <li class="property-item reveal-item">
-                        <span class="property-dot"></span>
-                        <span>Beach bungalows</span>
-                    </li>
-                    <li class="property-item reveal-item">
-                        <span class="property-dot"></span>
-                        <span>Glamping sites</span>
-                    </li>
-                    <li class="property-item reveal-item">
-                        <span class="property-dot"></span>
-                        <span>Winter retreats</span>
-                    </li>
-                    <li class="property-item reveal-item">
-                        <span class="property-dot"></span>
-                        <span>Any boutique property</span>
-                    </li>
-                </ul>
+            <div class="section-two-column">
+                <div>
+                    <p style="max-width: 700px;">Julia is a system for independent hosts with boutique properties. Any intimate, curated stay that deserves a premium digital presence. The template works because it focuses on what guests actually want: the story, the atmosphere, the experience. Not a generic property listing.</p>
+                </div>
+
+                <div class="property-box">
+                    <p style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 1.5rem; color: rgba(255,255,255,0.9);">Works for:</p>
+                    <ul class="property-list">
+                        <li class="property-item reveal-item">
+                            <span class="property-dot"></span>
+                            <span>Mountain cabins</span>
+                        </li>
+                        <li class="property-item reveal-item">
+                            <span class="property-dot"></span>
+                            <span>Beach bungalows</span>
+                        </li>
+                        <li class="property-item reveal-item">
+                            <span class="property-dot"></span>
+                            <span>Glamping sites</span>
+                        </li>
+                        <li class="property-item reveal-item">
+                            <span class="property-dot"></span>
+                            <span>Winter retreats</span>
+                        </li>
+                        <li class="property-item reveal-item">
+                            <span class="property-dot"></span>
+                            <span>Any boutique property</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
