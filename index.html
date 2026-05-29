@@ -128,12 +128,13 @@
         }
 
         .hero-image {
-            width: 100%;
-            max-width: 100%;
+            width: calc(100% + 10vw);
+            margin-left: -5vw;
+            max-width: none;
             height: auto;
-            max-height: 500px;
+            max-height: 550px;
             object-fit: scale-down;
-            margin: 2rem 0 0 0;
+            margin-top: 2rem;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
             animation: fadeInUp 1s ease-out 0.2s both;
             display: block;
@@ -254,65 +255,36 @@
             background: rgba(139, 125, 107, 0.3);
         }
 
-        .property-box {
-            background: var(--light-sand);
-            color: var(--dark);
-            padding: clamp(2rem, 4vw, 2.5rem);
-            border-left: 5px solid var(--forest);
-            border-radius: 0;
-            height: fit-content;
-            position: sticky;
-            top: 100px;
-        }
-
-        .property-box .property-list {
+        .property-list {
+            list-style: none;
             margin: 0;
+            padding: 0;
         }
 
-        .property-box .property-item {
-            color: var(--dark);
-            margin-bottom: 1.2rem;
+        .property-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-left: 0;
             font-size: 1.05rem;
+            line-height: 1.6;
         }
 
-        .property-box .property-dot {
+        .property-item:before {
+            content: none;
+        }
+
+        .property-dot {
+            width: 8px;
+            height: 8px;
             background: var(--forest);
+            border-radius: 50%;
+            flex-shrink: 0;
             opacity: 0.7;
         }
 
-        .property-box .property-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .property-box .property-label {
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--wood);
-            margin-bottom: 1.5rem;
-            display: block;
-            opacity: 0.9;
-        }
-
-        .section-two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: clamp(2rem, 5vw, 3rem);
-            align-items: flex-start;
-            margin-top: 2rem;
-        }
-
-        @media (max-width: 768px) {
-            .section-two-column {
-                grid-template-columns: 1fr;
-            }
-
-            .property-box {
-                position: static;
-            }
-        }
-
-        .reveal-item {
+.reveal-item {
             opacity: 0;
             transform: translateX(-20px);
             transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) var(--item-delay, 0s),
@@ -442,36 +414,10 @@
         <div class="container">
             <h2>One Template. Infinite Luxury Properties.</h2>
             
-            <div class="section-two-column">
-                <div>
-                    <p style="max-width: 700px;">Julia is a system for independent hosts with boutique properties. Any intimate, curated stay that deserves a premium digital presence. The template works because it focuses on what guests actually want: the story, the atmosphere, the experience. Not a generic property listing.</p>
-                </div>
-
-                <div class="property-box">
-                    <span class="property-label">Works for:</span>
-                    <ul class="property-list">
-                        <li class="property-item reveal-item">
-                            <span class="property-dot"></span>
-                            <span>Mountain cabins</span>
-                        </li>
-                        <li class="property-item reveal-item">
-                            <span class="property-dot"></span>
-                            <span>Beach bungalows</span>
-                        </li>
-                        <li class="property-item reveal-item">
-                            <span class="property-dot"></span>
-                            <span>Glamping sites</span>
-                        </li>
-                        <li class="property-item reveal-item">
-                            <span class="property-dot"></span>
-                            <span>Winter retreats</span>
-                        </li>
-                        <li class="property-item reveal-item">
-                            <span class="property-dot"></span>
-                            <span>Any boutique property</span>
-                        </li>
-                    </ul>
-                </div>
+            <p style="margin-top: 1.5rem; max-width: 700px;">Julia is a system for independent hosts with boutique properties. Any intimate, curated stay that deserves a premium digital presence. The template works because it focuses on what guests actually want: the story, the atmosphere, the experience. Not a generic property listing.</p>
+            
+            <div class="insight-box">
+                <strong>Works for:</strong> Mountain cabins, Beach bungalows, Glamping sites, Winter retreats, Any boutique property.
             </div>
         </div>
     </section>
